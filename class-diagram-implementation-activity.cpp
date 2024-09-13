@@ -5,7 +5,7 @@
 #include <unistd.h>
 using namespace std;
 
-// UserAccount Class
+// UserAccount Class: This Class handles user registration, login, and logout
 class UserAccount {
 private:
     string username;
@@ -30,7 +30,10 @@ public:
 
     void Logout() {
         loggedIn = false;
-        cout << username << " logged out.\n";
+        cout << "\n---------------------------------------------" << endl;
+        cout << "[" << username << "]" << " logged out.\n";
+        cout << "---------------------------------------------" << endl;
+        
     }
 
     bool isLoggedIn() {
@@ -40,7 +43,7 @@ public:
     string getUsername() { return username; }
 };
 
-// Product Class
+// Product Class: Represents a produc in the store
 class Product {
 private:
     string productID;
@@ -61,7 +64,7 @@ public:
     string getName() { return name; }
 };
 
-// Cart Item Class
+// CartItem Class: Represents an item in the shopping cart
 class CartItem {
 private:
     Product product;
@@ -70,15 +73,17 @@ private:
 public:
     CartItem(Product p, int q) : product(p), quantity(q) {}
 
+	// To display the cart item details
     void displayCartItem() {
         cout << setw(10) << product.getProductID() << setw(20) << product.getName() 
              << setw(10) << product.getPrice() << setw(10) << quantity << endl;
     }
 
+	// Calculation for the total price of the cart item
     float getItemTotal() { return product.getPrice() * quantity; }
 };
 
-// Order Class
+// Order Class: Represents an order placed by a user
 class Order {
 private:
     int orderID;
@@ -88,6 +93,7 @@ private:
 public:
     Order(int id) : orderID(id), totalAmount(0.0) {}
 
+	// Function to add a cart item to the order
     void addCartItem(CartItem item) {
         cartItems.push_back(item);
         totalAmount += item.getItemTotal();
@@ -96,7 +102,8 @@ public:
     float getTotalAmount() {
         return totalAmount;
     }
-
+	
+	// Function to display order details
     void displayOrder() {
         cout << "\nOrder ID: " << orderID << endl;
         cout << "Total Amount: " << totalAmount << endl;
@@ -108,12 +115,13 @@ public:
     }
 };
 
-// Shopping Cart Class
+// ShoppingCart Class: Manages the products in the cart
 class ShoppingCart {
 private:
-    vector<CartItem> cartItems;
+    vector<CartItem> cartItems; // List of the items
 
 public:
+	// Function to add a product to the cart
     void addProduct(Product p, int quantity) {
         cartItems.push_back(CartItem(p, quantity));
         cout << "Product added successfully!" << endl;
@@ -138,12 +146,13 @@ public:
         return cartItems;
     }
 
+	// Clearing the cart after checkout
     void clearCart() {
         cartItems.clear();
     }
 };
 
-// Payment Class
+// Payment Class: Handles payment processing
 class Payment {
 private:
     string paymentMethod;
@@ -168,7 +177,7 @@ public:
     }
 };
 
-// Menu Class
+// Menu Class: Displays the various menus for user interaction
 class Menu {
 public:
     void showMainMenu() {
@@ -191,7 +200,7 @@ public:
         cout << "1. View Products\n";
         cout << "2. View Shopping Cart\n";
         cout << "3. View Orders\n";
-        cout << "4. Log Out\n";
+        cout << "4. Return to Main Menu\n";
         cout << "Choose [1/2/3/4]: ";
     }
 };
@@ -379,7 +388,9 @@ int main() {
 
                 } else if (shoppingMenuOption == '4') {
                     // Exit
+                    cout << "---------------------------------------------";
                     cout << "\nExiting the system." << endl;
+                    cout << "---------------------------------------------" << endl;
                 }
 
             } while (shoppingMenuOption != '4');
@@ -394,6 +405,8 @@ int main() {
     } while (option != 4);
 
     // Display order history (optional)
+    cout << "\n\nThank you for shopping with us!" << endl;
+    cout << "\n---------------------------------------------";
     cout << "\nAll Orders:\n";
     for (Order ord : orderHistory) {
         ord.displayOrder();
